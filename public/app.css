@@ -1,0 +1,431 @@
+body,p,h1,h2,h3,h4,h5,h6,div,span,header,footer,img,a,a:hover,a:active,a:visited,table,tr,td,th,form,input,button,select,textarea{
+    line-height: 100%;
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    text-decoration: none;
+    color: #1a1a1a;
+    border-width: 0;
+  }
+  
+  .clear{
+    float: none;
+    width: 100%;
+    height: 1px;
+  }
+  
+  /* Main color palette */
+  .header{
+    background-color: #fff;
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: #fff;
+    box-shadow: 0 -25px 11px 20px #000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 0;
+    min-width: 1200px;
+    z-index: 10;
+  }
+  .wrap {
+    min-height: 100vh;
+    width:100%;
+  }
+  .landing {
+    height:100vh;
+    width:100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: url('/public/movieCollage.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .landing::after {
+    content:'';
+    left:0px;
+    top:0px;
+    width:100%;
+    height:100%;
+    position: absolute;
+    background: rgba(0,0,0,.4);
+  }
+  .landingText {
+    font-size: 50px;
+    font-family: sans-serif;
+    color:#F5A515;
+    text-shadow: 0px 5px 10px black;
+    user-select: none;
+    z-index:100;
+  }
+  .dashboard {
+    margin-top: 83px;
+    font-size:50px;
+  }
+  .fofo {
+    margin-top: 83px;
+    font-size:50px;
+  }
+  
+  .header ul{
+    list-style-type: none;
+    text-align: right;
+    padding: 0 75px;
+    float: right;
+  }
+  
+  .header ul li{
+    display: inline-block;
+    padding: 10px 10px 0 10px;
+  }
+  
+  .header ul li a{
+    text-transform: uppercase;
+    font-weight: 900 !important;
+    font-size: 11px;
+  }
+  
+  .header ul li.loggedIn{
+    display: none;
+  }
+  
+  body.loggedIn .header ul li.loggedIn{
+    display: inline-block;
+  }
+  
+  body.loggedIn .header ul li.loggedOut{
+    display: none;
+  }
+  
+  .header .logo{
+    text-align: left;
+    padding: 0 0 0 90px;
+    float: left;
+  }
+  
+  .header .logo img{
+      width: 50px;
+  }
+  
+  .content {
+    margin-top: 150px;
+    width: 1000px;
+    margin: 150px auto;
+  }
+  
+  .footer{
+    position: absolute;
+    bottom:-110px; 
+    width: 100%;
+    background-color: #1a1a1a;
+    padding: 50px 0;
+    text-align: center;
+  }
+  
+  .footer .copyright{
+    color: #fff;
+    font-size: 10px;
+  }
+  
+  /* Index */
+  h1{
+    text-align: center;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0 0 5px 0;
+  }
+  
+  h2{
+    text-align: center;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0 0 20px 0;
+  }
+  
+  body.index .blurb{
+    text-align: center;
+    background-color: #ececec;
+    border-color: #b3b3b3;
+    border-style: dotted;
+    border-width: 1px;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 0 auto 20px auto;
+    max-width: 500px;
+    line-height: 150%;
+    font-size: 14px;
+  }
+  
+  .ctaWrapper{
+    text-align: center;
+  }
+  
+  .cta,a.cta:hover,a.cta:active,a.cta:visited,button.cta:hover,button.cta:active,button.cta:visited{
+    background-color: #1a1a1a;
+    color: #fff;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    padding: 15px;
+    width: 150px;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .cta.blue{
+    background-color: #214478 !important;
+  }
+  
+  .cta.green{
+    background-color: #F5A515!important;
+  }
+  
+  .cta.red{
+    background-color: #c83737 !important;
+  }
+  
+  .warning{
+    font-style: italic;
+    color: #c83737;
+    font-size: 17px;
+    text-align: center;
+    line-height: 150%;
+    padding: 0 0 20px 0 ;
+  }
+  
+  /* Form Styling for Account Creation page and others */
+  .formWrapper{
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    min-height: 100vh;
+  }
+  #accountCreate {
+    margin-top: -100px;
+     width:50%;
+  }
+  .formError{
+    display: none;
+    background-color: #c83737;
+    font-style: italic;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin: 0 0 15px 0;
+    text-align: center;
+    border-color: #d87070;
+    border-width: 2px;
+    border-style: solid;
+  }
+  
+  .formSuccess{
+    display: none;
+    background-color: #217844;
+    font-style: italic;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin: 0 0 15px 0;
+    text-align: center;
+    border-color: #35c06d;
+    border-width: 2px;
+    border-style: solid;
+  }
+  
+  hr {
+    margin: 30px 0;
+  }
+  
+  input,select,option {
+    border:none;
+    border-bottom: 1px solid black;
+    outline:none;
+    padding: 7px 1%;
+    width: 100%;
+  }
+  
+  .checkboxGroup input{
+    display: inline-block;
+    width: initial;
+    margin: 20px;
+  }
+  
+  input.disabled{
+    background-color: #efefef;
+  }
+  
+  .inputWrapper{
+    padding: 0 0 20px 0;
+  }
+  
+  .inputLabel{
+    padding: 0 0 5px 0;
+    color: #808080;
+  }
+  
+  .backButton{
+    text-transform: uppercase;
+    font-weight: bold !important;
+    display: inline-block !important;
+    width: 100px;
+    padding: 7px !important;
+    color: #fff !important;
+    background-color: #1a1a1a;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  table{
+    width: 100%;
+  }
+  
+  tr{
+    width: 100%;
+  }
+  
+  th{
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 10px;
+    border-color: #000;
+    border-style: dotted;
+    padding: 10px;
+    margin: 0 0 10px 0;
+    background-color: #efefef;
+  }
+  
+  td{
+    padding: 5px;
+  }
+  
+  td a, td a:hover, td a:active{
+    color: #2e5fa8;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  /* Page specific styles for dashboard */
+  
+  .dashboard {
+    height:100vh;
+    width:100%;
+    background: lightblue;
+  }
+  .menu {
+    height:60px;
+    background: #A21F18;
+    display: flex;
+  }
+  .menuSwitcher {
+    color: white;
+    font: sans-serif;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 2px; 
+  }
+  .archiveBtnHolder {
+    display:flex;
+    height:100%;
+    padding:5px;
+    padding-right:10px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #A21F18;
+    transition: all .2s linear;
+  }
+  .myMoviesBtnHolder {
+    display:flex;
+    height:100%;
+    padding:5px;
+    padding-right:10px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #A21F18;
+    transition: all .2s linear;
+  }
+  .myMoviesIcon {
+    height:45px;
+    width:45px;
+    background: url('/public/folder-open-regular.svg');
+    background-position: center;
+    background-size: 50%;
+    background-repeat: no-repeat; 
+  }
+  .archiveIcon {
+    height:35px;
+    width:35px;
+    background: url('/public/database-solid.svg');
+    background-position: center;
+    background-size: 50%;
+    background-repeat: no-repeat; 
+  }
+  .searchWrap {
+    width:300px;
+    display:flex;
+    margin-right:20px;
+  }
+  .searchIcon {
+    height:45px;
+    width:45px;
+    background: url('/public/search-solid.svg');
+    background-position: center;
+    background-size: 50%;
+    background-repeat: no-repeat; 
+  }
+  .searchInput {
+    height:20px;
+    color:white;
+    font-size:18px;
+    border: none;
+    border-bottom: 2px solid white;
+    background: transparent;
+    outline:none;
+  }
+  .archiveBtnHolder:hover {
+    border-bottom:2px solid #FAD12C;
+  }
+  .myMoviesBtnHolder:hover {
+    border-bottom:2px solid #FAD12C;
+  }
+  .idbArchive {
+    display:none;
+    height:100%;
+    width:100%;
+    justify-content: space-between;
+    align-items:center;
+  }
+  .contentAligner {
+    height:100vh;
+    background-color:#FFFFFF;
+    display: flex;
+  }
+  .myMovies {
+    display:flex;
+    height:100%;
+    width:100%;
+    justify-content: space-between;
+    align-items:center;
+  }
+  .oldies {
+    width:20%;
+  }
+  .moviesList {
+    overflow-y: scroll;
+    width:80%;
+    background-color: black;
+  }

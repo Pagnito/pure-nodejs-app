@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <base href="{global.baseUrl}" />
+    <link type="image/x-icon" rel="icon" href="public/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="public/app.css" />
+    <title>Watched</title>
+</head>
+<body class="{body.class}">
+    
+<div class="wrap">
+    <div class="header">
+        <a href="/" class="logo"><img src="public/logo.png"/></a>
+        <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li class="loggedOut">
+                <a href="/account/create">Sign Up</a>
+            </li>
+            <li class="loggedOut">
+                <a href="/session/create">Login</a>
+            </li>
+            <li class="loggedIn">
+                <a href="/account/edit">Account</a>
+            </li>
+            <li class="loggedIn">
+                <a href="/dashboard">Dashboard</a>
+            </li>
+            <li class="loggedIn">
+                <a id="logout" href="#">Logout</a>
+            </li>
+        </ul>
+    </div>
