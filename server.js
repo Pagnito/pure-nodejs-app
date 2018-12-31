@@ -8,7 +8,7 @@ const handlers = require('./lib/handlers');
 const helpers = require('./lib/helpers');
 const _data = require('./lib/data');
 const StringDecoder = require('string_decoder').StringDecoder;
-
+const PORT = process.env.PORT || 4000;
 var server = {};
  server.httpServer = http.createServer(function(req, res) {
   server.unifiedServer(req,res);
@@ -21,10 +21,10 @@ server.httpsServerOptions = {
   cert: fs.readFileSync('./https/cert.pem')
 };
 
-server.httpsServer = https.createServer(server.httpsServerOptions, function(req, res) {
+/* server.httpsServer = https.createServer(server.httpsServerOptions, function(req, res) {
   server.unifiedServer(req,res);
 });
-
+ */
 
 server.unifiedServer = function(req, res) {
   	//parse url
@@ -42,7 +42,7 @@ server.unifiedServer = function(req, res) {
 	let headers = req.headers;
 
 	let cookie = typeof(headers.cookie) =="string" ? headers.cookie.replace('session=', '') : '';
-	console.log(cookie)
+	
 	//parse the payload
 	const decoder = new StringDecoder('utf-8');
 	let buffer = '';
@@ -176,12 +176,12 @@ function sanitizeTokens() {
 	})
 }
 server.init = function() {
-    server.httpServer.listen(config.httpPort, function() {
-        console.log('server listening on port ' + config.httpPort + ' in ' + config.envName + ' mode');
-    });
-    server.httpsServer.listen(config.httpsPort, function() {
-        console.log('server listening on port ' + config.httpsPort + ' in ' + config.envName + ' mode');
-    });
+    server.httpServer.listen(PORT, function() {
+        console.log('server listening on port ' + PORT + ' in ' + config.envName + ' mode');
+    }); 
+    /* server.httpsServer.listen(PORT, function() {
+        console.log('server listening on port ' + PORT + ' in ' + config.envName + ' mode');
+    }); */
 }
 sanitizeTokens();
 //define router
