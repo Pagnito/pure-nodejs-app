@@ -288,6 +288,18 @@ app.paint.switchToMyMovies = function(){
 	app.paint.paintMyMovies();
 	
 }
+app.paint.paintOldies = function(movies){
+	let oldies = document.getElementById('oldiesWrap');
+	let html = [];
+	movies.forEach(function(mov){		
+		img = mov.posterUrl !== null && mov.posterUrl.length>4  ? mov.posterUrl : 'public/fofo-01.png';
+		html.push(`
+			<div class="oldiePoster">
+				<img class="posterImg" src='`+img+`'/>
+			</div>`)
+		})
+		oldies.innerHTML = html.join('')
+}
 app.paint.paintMyMovies = function(movie){
 	let dash = document.getElementById('dashboard');
 	let myMovies = document.getElementById('myMoviesList');
@@ -333,7 +345,8 @@ app.paint.paintMyMovies = function(movie){
 				</div>`)
 				}		
 			})
-			myMovies.innerHTML = html.join('');		
+			myMovies.innerHTML = html.join('');	
+			app.paint.paintOldies(movies)	
 		})
 	}
 }
@@ -341,6 +354,7 @@ app.paint.switchMovieMenu = function() {
 	let dash = document.getElementById('dashboard');
 	let myMovies= document.getElementById('myMoviesMenu');
 	let archives = document.getElementById('idbArchiveMenu');
+	let arrows = document.getElementById('arrows');
 	let toggle = true;
 	if(dash!==null && dash!==undefined){
 		let btns = document.getElementsByClassName('menuSwitcher');
@@ -349,11 +363,13 @@ app.paint.switchMovieMenu = function() {
 				if(toggle===false){					
 					archives.style.display = 'none';
 					myMovies.style.display = 'flex';
+					arrows.style.display = 'none';
 					toggle=true;
 					app.paint.switchToMyMovies();
 				} else {
 					myMovies.style.display = 'none';
 					archives.style.display = 'flex';
+					arrows.style.display = 'flex';
 					toggle=false;
 					app.paint.switchToArchives();
 				}
