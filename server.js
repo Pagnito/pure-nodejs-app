@@ -4,6 +4,7 @@ const url = require('url');
 const config = require('./config');
 const fs = require('fs');
 const path = require('path');
+const knex = require('knex')
 const handlers = require('./lib/handlers');
 const helpers = require('./lib/helpers');
 const _data = require('./lib/data');
@@ -15,12 +16,45 @@ var server = {};
 });
 
 
+/* let date = new Date(Date.now()).toUTCString()
+helpers.unhashToken(helpers.createToken({userName: 'booty',
+	email: 'booty@gmail.com',
+	password: 'booty',
+	id: '2',
+	date:date})) */
 ////////////////////////////////////https vs http////////////////////////////////////////
 server.httpsServerOptions = {
   key: fs.readFileSync('./https/key.pem'),
   cert: fs.readFileSync('./https/cert.pem')
 };
-
+ server.db = knex({
+	client: 'pg',
+	connection: config.postgresURL
+  });
+  server.db.schema.hasTable('users').then(function(has){
+		if(!has){
+		  server.db.schema.createTable('users', function(table) {
+			  table.string('id')
+			  table.string('email')
+			  table.string('password')
+			  table.string('userName')			  
+			}).then(function(){console.log('createdUsersTable')})
+		}
+	})
+  server.db.schema.hasTable('movies').then(function(has){
+		if(!has){
+		  server.db.schema.createTable('movies', function(table) {
+			  table.string('id')
+			  table.string('userid')
+			  table.string('name')
+			  table.string('year')
+			  table.string('rating')
+			  table.string('posterUrl')
+			 
+			}).then(function(){console.log('createdMoviesTable')})
+		}
+	}) 
+  
 /* server.httpsServer = https.createServer(server.httpsServerOptions, function(req, res) {
   server.unifiedServer(req,res);
 });
@@ -65,23 +99,28 @@ server.unifiedServer = function(req, res) {
 			token: cookie
 		};
 		
-		chosenHandler(data, function(statusCode, payload, contentType,token) {
+		chosenHandler(data, server.db, function(statusCode, payload, contentType,token) {
 			token = typeof(token) === 'string' ? token : false;
 			contentType = typeof(contentType)==='string' ? contentType : 'json';	
 			statusCode = typeof statusCode == 'number' ? statusCode : 200;		
 			var stringPayload = '';
-			
-			if(token) {
-				res.setHeader("Set-Cookie", 'session='+token+';'+'HttpOnly; Max-Age=2222222; Path=/');
+			if(token && data.method == 'POST') {
+				res.setHeader("Set-Cookie", 'session='+token+';'+'HttpOnly; Expires='+payload.expires+'; Path=/');
 				payload = {
-					name:payload.firstName,
-					checks: payload.checks,
-					phone: payload.phone
+					email:payload.email,
+					expires: payload.expires,
+					token: 'true',
 				}
 			}
-			if(data.trimmedPath == 'api/tokens' && data.method == 'DELETE'){
-				console.log('TOKEN', data)
+			if(data.trimmedPath == 'api/session' && data.method == 'DELETE'){
 				res.setHeader("Set-Cookie", 'session=deleted;'+'HttpOnly; Max-Age=0; Path=/');
+			}
+			if(data.trimmedPath == 'api/users' && data.method == 'DELETE'){
+				res.setHeader("Set-Cookie", 'session=deleted;'+'HttpOnly; Max-Age=0; Path=/');
+			}
+			if(data.trimmedPath == 'api/users' && data.method == 'PUT'){
+				res.setHeader("Set-Cookie", 'session=deleted;'+'HttpOnly; Max-Age=0; Path=/');
+				res.setHeader("Set-Cookie", 'session='+token+';'+'HttpOnly; Expires='+payload.expires+'; Path=/');
 			}
 			if(contentType == 'json'){
 				payload = typeof payload == 'object' ? payload : {};
@@ -134,47 +173,9 @@ server.unifiedServer = function(req, res) {
 		});
 	});
 };
-let tokenPath = path.join(__dirname, '.data', 'tokens')
 
-function sanitizeTokens() {
-	fs.readdir(tokenPath, function(err, tokens){
-		if(err){
-			console.error( "Could not list the directory.", err );
-		} else {
-			let deletedTokens = 0;
-			let deletionErrs = false;
-			if(tokens.length>0){
-			tokens.forEach(function(token, ind){
-				_data.readWithExt(tokenPath, token, function(err, data){
-					if(!err){
-						if(data.expires < Date.now()){
-							_data.deleteWithExt(tokenPath, token, function(err){
-								if(!err){
-									deletedTokens++
-								} else {
-									deletionErrs = true;
-								}
-								if((ind+1)==tokens.length){
-									if(deletionErrs==false){
-										console.log('Tokens Sanitized '+ deletedTokens)
-									} else {
-										console.log('Token sanitization error')
-									}
-								}
-							})
-						}
-					} else {
-						console.log('Could not read token '+ token)
-					}
-				})
-				
-			})
-		} else {
-			console.log('No tokens to sanitize')
-		}
-		}
-	})
-}
+
+
 server.init = function() {
     server.httpServer.listen(PORT, function() {
         console.log('server listening on port ' + PORT + ' in ' + config.envName + ' mode');
@@ -183,7 +184,7 @@ server.init = function() {
         console.log('server listening on port ' + PORT + ' in ' + config.envName + ' mode');
     }); */
 }
-sanitizeTokens();
+
 //define router
 server.router = {
   '': handlers.index,
@@ -193,13 +194,10 @@ server.router = {
   'session/create': handlers.createSession,
   'session/deleted': handlers.deletedSession,
   'dashboard': handlers.dashboard,
-  'checks/create': handlers.createChecks,
-  'checks/edit' : handlers.editChecks, 
   'notFound': handlers.notFound,
-  'ping': handlers.ping,
   'api/users': handlers.users,
-  'api/tokens': handlers.tokens,
-  'api/checks': handlers.checks,
+  'api/session': handlers.session,
+  'api/myMovies': handlers.myMovies,
   'public': handlers.public
 };
 

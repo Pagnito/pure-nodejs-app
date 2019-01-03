@@ -1,16 +1,23 @@
 //container for all environments
+const dev = require('./devKeys');
 
-let baseUrl = process.env.NODE_ENV == 'production' ? 'https://fast-journey-14415.herokuapp.com/' : 'http://localhost:4000/';
+
 let env = {
   httpPort:4000,
   httpsPort:4001,
   envName: 'development',
   hashSecret: 'thisisasecret',
-  maxChecks: 5,
+  postgresURL: process.env.POSTGRES_URL,
   templateGlobals: {
     companyName: 'Jinko',
     yearCreated: '2018',
-    baseUrl: baseUrl
+    baseUrl: 'https://fast-journey-14415.herokuapp.com/'
   }
 }
-module.exports = env;
+
+if(process.env.NODE_ENV === 'production'){
+  module.exports = env;
+} else {
+  module.exports = dev;
+}
+

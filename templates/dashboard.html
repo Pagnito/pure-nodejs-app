@@ -1,8 +1,8 @@
-<div class="dashboard">
+<div id="dashboard" class="dashboard">
     <div class="contentAligner">      
         <div class="moviesList">
                 <div class="menu">
-                    <div class="myMovies">
+                    <div id="myMoviesMenu" class="myMovies">
                         <div class="archiveBtnHolder">
                              <div class="archiveIcon"></div>
                              <div class="menuSwitcher idbArchiveBtn">Archives</div>
@@ -10,33 +10,29 @@
                         <div class="deleteBtn"></div>
                         <div class="searchWrap">
                             <div class="searchIcon"></div>
-                            <input type="text"  class="searchInput searchInputMy" />
+                            <input type="text" id="searchInputMy" onkeydown="app.paint.searchMyMovies()" class="searchInput searchInputMy" />
                         </div>
                     </div> 
-                    <div class="idbArchive">
+                    <div id="idbArchiveMenu" class="idbArchive">
                         <div class="myMoviesBtnHolder">
                             <div class="myMoviesIcon"></div>
-                            <div class="menuSwitcher myMoviesBtn">My Movies</div>
+                            <div id="myMoviesBtn" class="menuSwitcher myMoviesBtn">My Movies</div>
                         </div>
                         <div class="addBtn"></div>
                         <div class="searchWrap">
                             <div class="searchIcon"></div>
-                            <input type="text"  class="searchInput searchInputArchive" />
+                            <input type="text" onchange="app.paint.searchArchives()" id="searchInputArchive" class="searchInput searchInputArchive" />
                         </div>
                     </div>  
                 </div>
-                <div class="movies">
-                    <div class="movie">              
-                        <div>
-                            <div class="poster"></div>
-                            <div class="movieInfo"></div>
-                        </div>
-                        <div class="otherInfo">
-                            <div class="ratings"></div>
-                            <div class="trashBtn"></div>
-                        </div>
-                    </div>
+                <div class="arrows">
+                        <div id="arrowLeft" class="arrowLeft"></div>
+                        <div id="arrowRight" class="arrowRight"></div>
                 </div>
+                <div id="moviesScrollAligner">
+                    <div id="archiveMoviesList" class="movies"></div>
+                    <div id="myMoviesList" class="movies"></div>
+                </div>                    
           </div>
         <div class="oldies"></div>
     </div>    

@@ -1,0 +1,39 @@
+<div id="account" class="account">
+    <div id="settingsWrap">
+        <div id="accMenu">
+            <div id="settingIcon"></div>
+            <div id="emailAccBtn" class="accMenuBtn">Change Email</div>
+            <div id="passwordAccBtn"class="accMenuBtn">Change Password</div>
+            <div id="deleteAccount" class="accMenuBtn">Delete Account</div>
+        </div>
+        <div id="accInputs">
+            <div id="accUserName">{account.userName}</div>
+           <div id="accEmailInputs" class="accSetInputWrap accEmailInputs">
+               <input placeholder="New Email" class="inputField accInput emailChangeInput" name="email"/>
+               <div class="accBtnChange">Change</div>
+            </div>
+           <div id="accPasswordInputs" class="accSetInputWrap">
+               <input placeholder="New Password" class="inputField accInput passwordChangeInput" name="password"/>
+               <div class="accBtnChange">Change</div>
+            </div>
+        </div>
+    </div> 
+    <div class="modal" id="confirmModal">
+            <div class="modal">        
+                    Are you sure you want to do this?
+                    <div id="modalBtnAligner">
+                        <div id="decYes" class="modalDecision">Yes</div>
+                        <div id="decNo" class="modalDecision">No</div> 
+                    </div>    
+            </div>
+        </div>  
+    <div class="modal" id="confirmDeleteModal">
+        <div class="modal">
+            Are you sure you want to delete your account?
+            <div id="modalBtnAligner">
+                <div id="decYesDelete" class="modalDecision">Yes</div>
+                <div id="decNoDelete" class="modalDecision">No</div> 
+            </div>          
+        </div>
+    </div> 
+</div>
