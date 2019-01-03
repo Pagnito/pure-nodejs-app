@@ -77,8 +77,17 @@ app.client.login = function(){
 }
 app.client.logout = function(){
 	let btn = document.getElementById('logout');
+	let btn2 = document.getElementById('logout2');
 	if(btn!==null & btn!==undefined){
 		btn.addEventListener('click', function(e){
+			app.client.request(undefined, 'api/session', 'DELETE', undefined, undefined, function(status, res){
+				localStorage.removeItem('email');
+				localStorage.removeItem('expires');
+				localStorage.removeItem('token');
+				window.location = '/'
+			})
+		}) 
+		btn2.addEventListener('click', function(e){
 			app.client.request(undefined, 'api/session', 'DELETE', undefined, undefined, function(status, res){
 				localStorage.removeItem('email');
 				localStorage.removeItem('expires');
@@ -158,9 +167,10 @@ app.api.getArchive = function(movie,page, callback){
 app.api.addMovie = function(event){
 	let data=event.target.getAttribute('data');
 	let parsedData = JSON.parse(data);
+	let idName = parsedData.idName;
 	console.log(parsedData)
 	app.client.request(undefined, 'api/myMovies', 'POST', undefined, parsedData, function(status, res){
-		console.log(res)
+		document.getElementById(idName).style.display = 'flex'
 	})
 }
 
@@ -174,13 +184,14 @@ app.paint.paintArchives = function(movie,page){
 		let img = ''; 
 		
 		app.api.getArchive(movie,page,function(res){
-			res.results.forEach(function(mov){
+			res.results.forEach(function(mov,ind){
 				img = mov.poster_path !== null && mov.poster_path.length>4  ? posterBaseUrl+mov.poster_path : 'public/fofo-01.png'
 				metaData = JSON.stringify({
 					name:mov.title,
 					year:mov.release_date,
 					rating:mov.vote_average,
-					posterUrl: posterBaseUrl+mov.poster_path
+					posterUrl: posterBaseUrl+mov.poster_path,
+					idName: 'num'+ind
 				})
 				html.push(`
 				<div class="movie">              
@@ -194,6 +205,9 @@ app.paint.paintArchives = function(movie,page){
 					</div>
 					<div class="otherInfo">					
 						<div data='`+metaData+`' onclick="app.api.addMovie(event)" class="plusBtn"></div>
+					</div>
+					<div id="num`+ind+`" class="added">
+						<div class="addedText">Added</div>
 					</div>
 				</div>`)
 			})
@@ -377,6 +391,20 @@ app.paint.switchMovieMenu = function() {
 		}
 	}	
 }
+app.paint.showMobileNav = function(){
+	let btn = document.getElementById('mobileNavBtn');
+	btn.addEventListener('click', function(){
+		document.getElementById('mobileNavBg').style.display = 'flex';
+		document.body.style.overflow = 'hidden';
+	})
+}
+app.paint.hideMobileNav = function(){
+	let nav = document.getElementById('mobileNavBg');
+	nav.addEventListener('click', function(){
+		document.getElementById('mobileNavBg').style.display = 'none';
+		document.body.style.overflow = 'visible';
+	})
+}
 app.account.deleteAccount = function(){
 	let account = document.getElementById('account');
 	let password = '';
@@ -464,6 +492,8 @@ app.init = function(){
 			}
 		}		
 	})
+	app.paint.showMobileNav();
+	app.paint.hideMobileNav(); 
 	app.paint.paintMyMovies();
 	app.paint.switchMovieMenu();
 	app.paint.nextPageArchives();
