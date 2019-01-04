@@ -185,14 +185,16 @@ app.paint.paintArchives = function(movie,page){
 		
 		app.api.getArchive(movie,page,function(res){
 			res.results.forEach(function(mov,ind){
-				img = mov.poster_path !== null && mov.poster_path.length>4  ? posterBaseUrl+mov.poster_path : 'public/fofo-01.png'
+				img = mov.poster_path !== null && mov.poster_path.length>4  ? posterBaseUrl+mov.poster_path : 'public/fofo-01.png';
+				let title = mov.title.replace(/'/g, ' ').replace(/"/g, ' ')
 				metaData = JSON.stringify({
-					name:mov.title,
+					name:title,
 					year:mov.release_date,
 					rating:mov.vote_average,
 					posterUrl: posterBaseUrl+mov.poster_path,
 					idName: 'num'+ind
 				})
+				console.log(metaData)
 				html.push(`
 				<div class="movie">              
 					<div class="movieInfo">
